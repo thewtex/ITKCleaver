@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Writing to the page</title>
+
+  <link rel="stylesheet" href="/assets/pyscript.css" />
+  <script defer src="/assets/pyscript.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.4.0/dist/themes/light.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.4.0/dist/shoelace-autoloader.js"></script>
+  </head>
+
+  <body>
+    <py-config>
+      name = "itk-cleaver"
+      description = "A multi-material meshing application"
+      version = "0.1.0"
+      author_name = "Matt McCormick"
+      author_email = "matt.mccormick@kitware.com"
+      packages = ["numpy", "micropip"]
+
+      [splashscreen]
+      enabled = true
+      autoclose = true
+
+      [[interpreters]]
+      src = "https://cdn.jsdelivr.net/pyodide/v0.23.1/full/pyodide.js"
+      name = "pyodide-0.23.1"
+      lang = "python"
+    </py-config>
+    <div id="manual-write"></div>
+    <sl-button py-click="write_to_page()" id="manual">Say Hello</sl-button>
+    <div id="display-write"></div>
+    <button py-click="display_to_div()" id="display">Say Things!</button>
+
+    <div id="replOutput"></div>
+    <py-repl auto-generate="true">
+      print('inputs', itk_cleaver_args)
+      print('parameters', itk_cleaver_kwargs)
+    </py-repl>
+    <div>
+      <py-terminal>
+    </div>
+
+    <py-script>
+import asyncio
+import pyodide
+
+itk_cleaver_args = []
+itk_cleaver_kwargs = {}
+
+def write_to_page():
+  manual_div = Element("manual-write")
+  manual_div.element.innerText = "Hello World"
+  manual_div.element.innerHTML = "<p><b>Hello World</b></p>"
+
+def display_to_div():
+  display("I display things!", target="display-write")
+
+print('Welcome to the itk-cleaver app!️\n')
+print('This is an interactive python web app running in your browser.')
+print('Print shift+enter in the REPL above to interactive with the Python environment.')
+    </py-script>
+  </body>
+</html>
